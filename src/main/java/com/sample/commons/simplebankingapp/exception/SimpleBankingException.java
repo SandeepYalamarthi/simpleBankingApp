@@ -1,4 +1,4 @@
-package com.sample.commons.simpleBankingApp.exception;
+package com.sample.commons.simplebankingapp.exception;
 
 public class SimpleBankingException extends RuntimeException   {
 

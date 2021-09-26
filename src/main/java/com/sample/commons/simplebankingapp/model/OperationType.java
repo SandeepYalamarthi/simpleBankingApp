@@ -1,4 +1,4 @@
-package com.sample.commons.simpleBankingApp.model;
+package com.sample.commons.simplebankingapp.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

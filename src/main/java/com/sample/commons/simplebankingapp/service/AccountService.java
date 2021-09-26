@@ -1,9 +1,10 @@
-package com.sample.commons.simpleBankingApp.service;
+package com.sample.commons.simplebankingapp.service;
 
-import com.sample.commons.simpleBankingApp.model.Account;
-import com.sample.commons.simpleBankingApp.repository.AccountRepository;
-import com.sample.commons.simpleBankingApp.request.CreateAccountRequest;
-import com.sample.commons.simpleBankingApp.response.AccountResponse;
+import com.sample.commons.simplebankingapp.exception.SimpleBankingException;
+import com.sample.commons.simplebankingapp.model.Account;
+import com.sample.commons.simplebankingapp.repository.AccountRepository;
+import com.sample.commons.simplebankingapp.request.CreateAccountRequest;
+import com.sample.commons.simplebankingapp.response.AccountResponse;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -37,7 +38,9 @@ public class AccountService {
   public CompletionStage<AccountResponse> getAccountById(Integer accountId) {
 
     Optional<Account> account = accountRepository.findById(accountId);
-    return CompletableFuture.completedFuture(AccountResponse.from(account.get()));
+    return CompletableFuture.completedFuture(AccountResponse.from(account.orElseThrow(() ->
+        new SimpleBankingException("unable to get account id")
+    )));
 
   }
 }

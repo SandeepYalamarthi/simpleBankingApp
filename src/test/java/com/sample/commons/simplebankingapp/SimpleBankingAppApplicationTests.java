@@ -1,4 +1,4 @@
-package com.sample.commons.simpleBankingApp;
+package com.sample.commons.simplebankingapp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

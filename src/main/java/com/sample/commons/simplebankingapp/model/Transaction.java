@@ -1,7 +1,6 @@
-package com.sample.commons.simpleBankingApp.model;
+package com.sample.commons.simplebankingapp.model;
 
-import com.sample.commons.simpleBankingApp.request.CreateAccountRequest;
-import com.sample.commons.simpleBankingApp.request.CreateTransactionRequest;
+import com.sample.commons.simplebankingapp.request.CreateTransactionRequest;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,13 +29,13 @@ public class Transaction {
   private Integer operationTypeId;
 
   @Column(name = "Amount")
-  private Double Amount;
+  private Double amount;
 
   @Column(name = "EventDate")
   private Date eventDate;
 
 
   public static Transaction from(CreateTransactionRequest createTransactionRequest) {
-    return Transaction.builder().Amount(createTransactionRequest.getAmount()).accountId(createTransactionRequest.getAccountID()).operationTypeId(createTransactionRequest.getOperationTypeID()).build();
+    return Transaction.builder().amount(createTransactionRequest.getAmount()).accountId(createTransactionRequest.getAccountID()).operationTypeId(createTransactionRequest.getOperationTypeID()).build();
   }
 }

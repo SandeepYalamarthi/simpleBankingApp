@@ -1,8 +1,8 @@
-package com.sample.commons.simpleBankingApp.service;
+package com.sample.commons.simplebankingapp.service;
 
-import com.sample.commons.simpleBankingApp.model.Transaction;
-import com.sample.commons.simpleBankingApp.repository.TransactionRepository;
-import com.sample.commons.simpleBankingApp.request.CreateTransactionRequest;
+import com.sample.commons.simplebankingapp.model.Transaction;
+import com.sample.commons.simplebankingapp.repository.TransactionRepository;
+import com.sample.commons.simplebankingapp.request.CreateTransactionRequest;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import org.springframework.beans.factory.annotation.Autowired;

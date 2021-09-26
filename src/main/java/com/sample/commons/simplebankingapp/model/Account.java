@@ -1,6 +1,6 @@
-package com.sample.commons.simpleBankingApp.model;
+package com.sample.commons.simplebankingapp.model;
 
-import com.sample.commons.simpleBankingApp.request.CreateAccountRequest;
+import com.sample.commons.simplebankingapp.request.CreateAccountRequest;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;

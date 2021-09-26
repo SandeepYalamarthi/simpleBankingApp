@@ -1,6 +1,6 @@
-package com.sample.commons.simpleBankingApp.repository;
+package com.sample.commons.simplebankingapp.repository;
 
-import com.sample.commons.simpleBankingApp.model.Transaction;
+import com.sample.commons.simplebankingapp.model.Transaction;
 import org.springframework.data.repository.CrudRepository;
 
 public interface TransactionRepository extends CrudRepository<Transaction,Integer> {

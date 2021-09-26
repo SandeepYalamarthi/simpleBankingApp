@@ -1,9 +1,8 @@
-package com.sample.commons.simpleBankingApp.controller;
+package com.sample.commons.simplebankingapp.controller;
 
-import com.sample.commons.simpleBankingApp.model.Account;
-import com.sample.commons.simpleBankingApp.request.CreateAccountRequest;
-import com.sample.commons.simpleBankingApp.response.AccountResponse;
-import com.sample.commons.simpleBankingApp.service.AccountService;
+import com.sample.commons.simplebankingapp.request.CreateAccountRequest;
+import com.sample.commons.simplebankingapp.response.AccountResponse;
+import com.sample.commons.simplebankingapp.service.AccountService;
 import java.util.concurrent.CompletionStage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

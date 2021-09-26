@@ -1,4 +1,4 @@
-package com.sample.commons.simpleBankingApp.request;
+package com.sample.commons.simplebankingapp.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
