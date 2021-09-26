@@ -6,6 +6,8 @@ import com.sample.commons.simpleBankingApp.request.CreateAccountRequest;
 import com.sample.commons.simpleBankingApp.response.AccountResponse;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +18,12 @@ public class AccountService {
   @Autowired
   AccountRepository accountRepository;
 
-  public void createAccount(CreateAccountRequest createAccountRequest) {
+  public CompletionStage<Integer> createAccount(CreateAccountRequest createAccountRequest) {
 
     Account account = Account.from(createAccountRequest);
-    accountRepository.save(account);
+    Account savedAccount = accountRepository.save(account);
+    return CompletableFuture.completedFuture(savedAccount.getAccountId());
+
   }
 
   public List<AccountResponse> getAccounts() {
@@ -30,10 +34,10 @@ public class AccountService {
   }
 
 
-  public AccountResponse getAccountById(Integer accountId) {
+  public CompletionStage<AccountResponse> getAccountById(Integer accountId) {
 
     Optional<Account> account = accountRepository.findById(accountId);
-    return AccountResponse.from(account.get());
+    return CompletableFuture.completedFuture(AccountResponse.from(account.get()));
 
   }
 }

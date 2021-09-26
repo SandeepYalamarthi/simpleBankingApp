@@ -24,7 +24,7 @@ public class TransactionController {
   public CompletionStage<ResponseEntity<String>> createTransaction(
       @RequestBody CreateTransactionRequest createTransactionRequest
   ) {
-    log.info("adding catalog root");
+    log.info("adding transaction");
     return transactionService.createTransaction(createTransactionRequest)
         .thenApply(transactionId -> ResponseEntity.status(HttpStatus.CREATED)
             .header("transactionId", String.valueOf(transactionId)).body("")).toCompletableFuture();
