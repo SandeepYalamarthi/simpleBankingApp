@@ -3,6 +3,7 @@ package com.sample.commons.simplebankingapp.controller;
 import com.sample.commons.simplebankingapp.request.CreateAccountRequest;
 import com.sample.commons.simplebankingapp.response.AccountResponse;
 import com.sample.commons.simplebankingapp.service.AccountService;
+import java.util.List;
 import java.util.concurrent.CompletionStage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class AccountController {
   }
 
 
-  @GetMapping
+  @GetMapping("/{accountId}")
   public CompletionStage<ResponseEntity<AccountResponse>> getAccount(
       @PathVariable("accountId") Integer accountId) {
     log.info("get  account by id");
@@ -43,6 +44,17 @@ public class AccountController {
     return accountService.getAccountById(accountId)
         .thenApply(accountResponse -> ResponseEntity.status(
             HttpStatus.OK).body(accountResponse))
+        .toCompletableFuture();
+  }
+
+
+  @GetMapping
+  public CompletionStage<ResponseEntity<List<AccountResponse>>> getAccounts() {
+    log.info("get  account by id");
+
+    return accountService.getAccounts().thenApply(accountResponses ->
+            ResponseEntity.status(
+                HttpStatus.OK).body(accountResponses))
         .toCompletableFuture();
   }
 }

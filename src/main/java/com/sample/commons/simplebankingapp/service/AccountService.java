@@ -5,6 +5,7 @@ import com.sample.commons.simplebankingapp.model.Account;
 import com.sample.commons.simplebankingapp.repository.AccountRepository;
 import com.sample.commons.simplebankingapp.request.CreateAccountRequest;
 import com.sample.commons.simplebankingapp.response.AccountResponse;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -22,16 +23,18 @@ public class AccountService {
   public CompletionStage<Integer> createAccount(CreateAccountRequest createAccountRequest) {
 
     Account account = Account.from(createAccountRequest);
+    account.setCreatedAt(new Timestamp(System.currentTimeMillis()));
     Account savedAccount = accountRepository.save(account);
     return CompletableFuture.completedFuture(savedAccount.getAccountId());
 
   }
 
-  public List<AccountResponse> getAccounts() {
+  public CompletionStage<List<AccountResponse>> getAccounts() {
 
-    return ((List<Account>) accountRepository.findAll()).stream()
+    List<AccountResponse> accountResponses= ((List<Account>) accountRepository.findAll()).stream()
         .map(AccountResponse::from).collect(
             Collectors.toList());
+    return CompletableFuture.completedFuture(accountResponses);
   }
 
 
