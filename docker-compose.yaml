@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  simple:
+    image: simplebankingapp:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - environmentName=local
+    ports:
+      - 9001:9001

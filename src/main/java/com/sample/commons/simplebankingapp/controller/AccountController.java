@@ -34,10 +34,6 @@ public class AccountController {
 
   }
 
-  @GetMapping
-  public void getAccounts() {
-    accountService.getAccounts();
-  }
 
   @GetMapping
   public CompletionStage<ResponseEntity<AccountResponse>> getAccount(
