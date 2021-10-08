@@ -17,7 +17,7 @@ public class TransactionService {
   @Autowired
   TransactionRepository transactionRepository;
 
-  public  TransactionResponse createTransaction(
+  public synchronized TransactionResponse  createTransaction(
       CreateTransactionRequest createTransactionRequest) {
 
     //get transaction from request
