@@ -17,7 +17,7 @@ public class TransactionService {
   @Autowired
   TransactionRepository transactionRepository;
 
-  public CompletionStage<TransactionResponse> createTransaction(
+  public  TransactionResponse createTransaction(
       CreateTransactionRequest createTransactionRequest) {
 
     //get transaction from request
@@ -28,7 +28,7 @@ public class TransactionService {
 
     //save transaction in db
     Transaction savedTransaction = transactionRepository.save(transaction);
-    return CompletableFuture.completedFuture(TransactionResponse.from(savedTransaction));
+    return TransactionResponse.from(savedTransaction);
   }
 
   //calculate balance amount for incomingTransaction.

@@ -5,6 +5,7 @@ import com.sample.commons.simplebankingapp.request.CreateTransactionRequest;
 import com.sample.commons.simplebankingapp.response.TransactionResponse;
 import com.sample.commons.simplebankingapp.service.TransactionService;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,8 @@ public class TransactionController {
       @RequestBody CreateTransactionRequest createTransactionRequest
   ) {
     log.info("adding transaction");
-    return transactionService.createTransaction(createTransactionRequest)
+    return CompletableFuture.supplyAsync(() ->
+            transactionService.createTransaction(createTransactionRequest))
         .thenApply(transactionResponse -> ResponseEntity.status(HttpStatus.CREATED)
             .header("transactionId", String.valueOf(transactionResponse.getTransactionId()))
             .body(transactionResponse)).toCompletableFuture();
