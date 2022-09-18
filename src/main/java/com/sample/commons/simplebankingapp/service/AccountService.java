@@ -10,6 +10,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,41 +21,43 @@ public class AccountService {
     AccountRepository accountRepository;
 
     public Account createAccount(Account account) {
-
-        account.setCreatedAt(LocalDateTime.now());
-        Account savedAccount = accountRepository.save(account);
-        return savedAccount;
-
+        try {
+            account.setCreatedAt(LocalDateTime.now());
+            return accountRepository.save(account);
+        } catch (DataIntegrityViolationException exception) {
+            throw new SimpleBankingException("duplicate account cannot be created for same name", exception);
+        }
     }
 
     public List<Account> getAccounts() {
-        List<Account> accountResponses = ((List<Account>) accountRepository.findAll()).stream().collect(Collectors.toList());
-        return accountResponses;
+        return ((List<Account>) accountRepository.findAll()).stream().collect(Collectors.toList());
     }
 
 
     public Account getAccountById(Integer accountId) {
 
         Optional<Account> account = accountRepository.findById(accountId);
-        return account.orElseThrow(() ->
-                new SimpleBankingException("unable to get account id")
-        );
+        return account.orElseThrow(() -> new SimpleBankingException("unable to get account id"));
 
     }
 
     public Account updateAccount(Account account, Integer id) {
-        if (account.getAccountId() != id) {
-            throw new SimpleBankingException("body path mismatch for account");
+
+        Account existingAccount = accountRepository.findById(id).orElse(null);
+        if (existingAccount == null) {
+            throw new SimpleBankingException("wrong details provided");
         }
-        Account existingAccount = accountRepository.findById(id).get();
-        existingAccount.setDocumentNumber(account.getDocumentNumber());
-        existingAccount.setName(account.getName());
+        existingAccount.setDocumentCode(account.getDocumentCode());
         existingAccount.setPhoneNumber(account.getPhoneNumber());
+        existingAccount.setUpdatedAt(LocalDateTime.now());
         return accountRepository.save(existingAccount);
     }
 
     public void deleteAccount(Long id) {
-        Account existingAccount = accountRepository.findById(Math.toIntExact(id)).get();
-        accountRepository.delete(existingAccount);
+        try {
+            accountRepository.deleteById(Math.toIntExact(id));
+        } catch (EmptyResultDataAccessException exception) {
+            throw new SimpleBankingException("unable to find account with id ",exception);
+        }
     }
 }

@@ -1,25 +1,18 @@
 package com.sample.commons.simplebankingapp.exception;
 
-public class SimpleBankingException extends RuntimeException   {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-  public SimpleBankingException() {
-    super();
-  }
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+public class SimpleBankingException extends RuntimeException {
 
-  public SimpleBankingException(String message) {
-    super(message);
-  }
+    public SimpleBankingException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-  public SimpleBankingException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public SimpleBankingException(String message) {
+        super(message);
+    }
 
-  public SimpleBankingException(Throwable cause) {
-    super(cause);
-  }
 
-  protected SimpleBankingException(String message, Throwable cause, boolean enableSuppression,
-      boolean writableStackTrace) {
-    super(message, cause, enableSuppression, writableStackTrace);
-  }
 }

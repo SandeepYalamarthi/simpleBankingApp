@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,21 +26,22 @@ public class Account implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "Account_ID")
+    @Column(name = "Account_Id")
     private Integer accountId;
 
-    @Column(name = "Document_Number")
-    private String documentNumber;
+    @Column(name = "Document_Code")
+    private String documentCode;
 
 
-    @NotBlank(message = "Name is mandatory")
-    @Column(name = "Name")
+    @Column(name = "Name", unique = true)
     private String name;
 
     @Column(name = "Phone_Number")
-    private String phoneNumber;
+    private Long phoneNumber;
 
     private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
 
 
 }

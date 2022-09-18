@@ -39,24 +39,24 @@ class AccountServiceTest {
     void init() {
         account1 = new Account();
         account1.setAccountId(1);
-        account1.setDocumentNumber("10001");
+        account1.setDocumentCode("10001");
         account1.setCreatedAt(LocalDateTime.now());
 
         account2 = new Account();
         account2.setAccountId(2);
-        account2.setDocumentNumber("10002");
+        account2.setDocumentCode("10002");
         account2.setCreatedAt(LocalDateTime.now());
     }
 
     @Test
     void save() {
-        Account createAccountRequest = new Account();
-        createAccountRequest.setDocumentNumber("10001");
+        Account createAccount = new Account();
+        createAccount.setDocumentCode("10001");
 
 
         when(accountRepository.save(any(Account.class))).thenReturn(account1);
 
-        Account createdAccount = accountService.createAccount(createAccountRequest);
+        Account createdAccount = accountService.createAccount(createAccount);
 
         assertNotNull(createdAccount);
     }
@@ -82,7 +82,7 @@ class AccountServiceTest {
         when(accountRepository.findById(any())).thenReturn(Optional.of(account1));
         Account existingAccount = accountService.getAccountById(account1.getAccountId());
         assertNotNull(existingAccount);
-        assertThat(existingAccount.getAccountId()).isNotEqualTo(null);
+        assertThat(existingAccount.getAccountId()).isNotNull();
     }
 
 
@@ -91,8 +91,9 @@ class AccountServiceTest {
 
 
         when(accountRepository.findById(2)).thenReturn(Optional.of(account1));
+        Integer id = account1.getAccountId();
         assertThrows(RuntimeException.class, () -> {
-            accountService.getAccountById(account1.getAccountId());
+            accountService.getAccountById(id);
         });
     }
 
@@ -114,12 +115,11 @@ class AccountServiceTest {
     void deleteAccount() {
 
         Long accountId = 1L;
-        when(accountRepository.findById(any())).thenReturn(Optional.of(account1));
-        doNothing().when(accountRepository).delete(any(Account.class));
+        doNothing().when(accountRepository).deleteById(any());
 
         accountService.deleteAccount(accountId);
 
-        verify(accountRepository, times(1)).delete(account1);
+        verify(accountRepository, times(1)).deleteById(account1.getAccountId());
     }
 
 
