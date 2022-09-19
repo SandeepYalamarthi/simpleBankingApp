@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   simple:
-    image: simplebankingapp:latest
+    image: simpleBankingApp:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -10,3 +10,12 @@ services:
       - environmentName=local
     ports:
       - 9001:9001
+#  mysql:
+#      image: mysql:latest
+#      ports:
+#        - 8083:3306
+#      volumes:
+#        - ./test-sql-2:/docker-entrypoint-initdb.d
+#      environment:
+#        MYSQL_ROOT_PASSWORD: pwd
+#        MYSQL_DATABASE: example
