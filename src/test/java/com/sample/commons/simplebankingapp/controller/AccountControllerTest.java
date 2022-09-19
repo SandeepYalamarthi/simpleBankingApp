@@ -36,11 +36,41 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
     @Test
      void testGetAllAccounts() {
         HttpHeaders headers = new HttpHeaders();
+
+
+        //create accounts
+        Account randomAccount = createRandomAccount();
+        CreateAccountRequest createAccountRequest = new CreateAccountRequest();
+        createAccountRequest.setDocumentCode(randomAccount.getDocumentCode());
+        createAccountRequest.setPhoneNumber(randomAccount.getPhoneNumber());
+        createAccountRequest.setName(randomAccount.getName());
+
+        HttpEntity<CreateAccountRequest> createAccountRequestHttpEntity = new HttpEntity<>(createAccountRequest, headers);
+
+        ResponseEntity<Account> createResponse =
+                testRestTemplate.exchange(getRootUrl() + "/accounts", HttpMethod.POST, createAccountRequestHttpEntity, Account.class);
+
+
+        Account randomAccount2 = createRandomAccount();
+        CreateAccountRequest createAccountRequest2 = new CreateAccountRequest();
+        createAccountRequest2.setDocumentCode(randomAccount2.getDocumentCode());
+        createAccountRequest2.setPhoneNumber(randomAccount2.getPhoneNumber());
+        createAccountRequest2.setName(randomAccount2.getName());
+
+        HttpEntity<CreateAccountRequest> createAccountRequestHttpEntity2 = new HttpEntity<>(createAccountRequest2, headers);
+
+        ResponseEntity<Account> createResponse2 =
+                testRestTemplate.exchange(getRootUrl() + "/accounts", HttpMethod.POST, createAccountRequestHttpEntity2, Account.class);
+
+
+
+        //get accounts
         HttpEntity<Account> entity = new HttpEntity<Account>(null, headers);
 
         ResponseEntity<List> response =
                 testRestTemplate.exchange(getRootUrl() + "/accounts", HttpMethod.GET, entity, List.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotEquals(0, response.getBody().size());
     }
 
 
